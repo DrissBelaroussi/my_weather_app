@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ asset('css/style.css')}}"/>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-default margin-nav colorLightBlue">
+    <a class="navbar-brand" href="{{ path('weather') }}">
+      <img src="{{ asset('images/weather.png')}}"  class="resize-logo d-inline-block align-top" alt="">
+      <strong>Weather App </strong> 
+    </a>  
+  </nav>
+
+  <div class="form-row margin-top-5">  
+   <div class="col-md-4 mb-3"> 
+   </div> 
+   <div class="col-md-4 mb-3"> 
+    {{ form_start(formMeteo) }}
+    {{ form_errors(formMeteo.city) }}
+    {{ form_widget(formMeteo.city) }}
+    {{ form_help(formMeteo.city) }}
+    <div class="center margin-top-2">
+      {{ form_row(formMeteo.Submit) }} 
+      {{ form_end(formMeteo) }}
+    </div>
+  </div>
+</div>
+
+{% if exception is defined %}
+<div class="form-row margin-top-2">
+  <div class="col-md-4 mb-3"> 
+  </div>
+  <div class="col-md-4 mb-3 width-medium "> 
+    <div class="alert alert-danger center" role="alert">
+      <strong>City not found ! :( </strong> 
+    </div>
+  </div>
+</div>
+{%endif%}
+
+
+{% if result is defined %}
+<div class="form-row ">
+
+  <div class="col-md-2 mb-3"> 
+  </div>
+
+  <div class="col-md-8 mb-3 "> 
+  </div>
+  <table class="table width-medium  table-striped table-default">
+    <tr class="table center">
+      <th>City</th>
+      <th> Country Code</th>
+      <th> Weather</th>
+      <th> Description </th>
+      <th> </th>
+      <th> Location </th>
+    </tr>
+    {% for uneTemp in result %}
+    <tr class="table ">
+     <td>{{uneTemp["name"]}}</td> 
+     <td>{{uneTemp["country"]}}</td>
+     <td>{{uneTemp["temp"]}} ° C </td>
+     <td>{{uneTemp["description"]}} </td>
+     <td> <img src="http://openweathermap.org/img/w/{{uneTemp["img"]}}.png" /> </td>
+     <td class="center"> 
+      <a href="https://www.openstreetmap.org/#map=14/{{uneTemp["lat"]}}/{{uneTemp["lon"]}}"> [{{uneTemp["lat"]}} ; {{uneTemp["lon"]}}]</a>
+    </td>
+  </tr>
+  {%endfor%}
+</table>
+</div>
+
+<div class="form-row margin-top-2">
+  <div class="col-md-3 mb-3"> 
+  </div>
+  <div class="col-md-6 mb-3 width-medium "> 
+    <div class="alert alert-default center" role="alert">
+      <strong>Don't forget to contact me : </strong>  Driss Belaroussi - driss.belaroussi.sio@gmail.com
+    </div>
+  </div>
+</div>
+{%endif%}
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+crossorigin="anonymous"></script>
+
+</html>
